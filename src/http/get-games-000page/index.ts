@@ -1,6 +1,4 @@
 import { DOMParser } from 'https://deno.land/x/deno_dom@v0.1.15-alpha/deno-dom-wasm.ts';
-import { HTMLElement } from 'https://github.com/microsoft/TypeScript/blob/main/lib/lib.dom.d.ts'
-
 class Leet {
   root: string;
   base: string;
