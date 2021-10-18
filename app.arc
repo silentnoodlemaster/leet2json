@@ -2,8 +2,7 @@
 leet2json
 
 @http
-get /
-get /games
+get /games/:page
 
 @tables
 data
