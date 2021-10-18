@@ -1,8 +1,9 @@
 @app
-deno-hello
+leet2json
 
 @http
 get /
+get /games
 
 @tables
 data
