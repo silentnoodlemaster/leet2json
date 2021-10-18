@@ -1,4 +1,4 @@
-import { DOMParser } from 'https://deno.land/x/deno_dom@v0.1.15-alpha/deno-dom-wasm.ts';
+import { DOMParser, Element } from 'https://deno.land/x/deno_dom@v0.1.15-alpha/deno-dom-wasm.ts';
 class Leet {
   root: string;
   base: string;
@@ -16,8 +16,7 @@ class Leet {
     const document = new DOMParser().parseFromString(html, 'text/html');
     if (document) {
       this.pages = parseInt(document.querySelector('li.last a')!.getAttribute('href')!.split('/')[2]);
-      document.querySelectorAll('td.coll-1.name').forEach((e: HTMLElement) => {
-        e.querySelectorAll('a:not(.icon)').forEach((a: HTMLElement) => {
+      (document.querySelectorAll('td.coll-1.name a:not(.icon)') as unknown as Element[]).forEach((a) => {
           const href = a.getAttribute('href');
           const name = a.textContent;
           this.items.push({
@@ -25,7 +24,6 @@ class Leet {
             url: href
           });
         });
-      });
     }
     const body = {items: this.items, pages: this.pages} as any;
     if (page+1 < this.pages )
@@ -45,6 +43,6 @@ export async function handler (req: any) {
       'content-type': 'application/json; charset=utf8',
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0'
     },
-    body: JSON.stringify(await leet.build(req.pathParameters.page))
+    body: JSON.stringify(await leet.build(parseInt(req.pathParameters.page)))
   }
 }
